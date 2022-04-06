@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header :: header" />
+
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>게시글 목록</h2>
+    </div>
+    <div th:if="${session.loginMember == null}" class="btn btn-dark" th:onclick="|location.href='@{/login}'|" type="button">로그인</div>
+    <div th:unless="${session.loginMember == null}" class="btn btn-dark" th:onclick="|location.href='@{/logout}'|" type="button">로그아웃</div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-1">번호</th>
+                <th class="col-5">제목</th>
+                <th class="col-3">날짜</th>
+                <th class="col-2">작성자</th>
+                <th class="col-1">조회</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post: ${posts}">
+                <td th:text="${post.id}"></td>
+                <td><a th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}"></a></td>
+                <td th:text="${#temporals.format(post.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${post.writer.loginId}"></td>
+                <td th:text="${post.views}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${session.loginMember != null}" class="btn btn-dark" th:onclick="|location.href='@{/posts/new}'|" type="button" style="float:right">글 쓰기</div>
+    </div>
+</div>
+</body>
+</html>

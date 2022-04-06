@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header :: header" />
+
+
+<body>
+
+<div id="commentList">
+    <table class="table">
+        <tr th:each="comment: ${comments}">
+            <td th:text="${comment.writer.loginId}" class="col-3"></td>
+            <td th:text="${comment.content}" class="col-9"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header :: header" />
+
+<body>
+<div class="container" style="max-width: 560px">
+    <div class="py-5 text-center">
+        <h2>회원 로그인</h2>
+    </div>
+
+    <form action="posts/board.html" th:action method="post">
+        <div>
+            <label for="loginId">로그인 ID</label>
+            <input type="text" id="loginId" name="loginId" class="form-control" placeholder="아이디를 입력하세요"/>
+        </div>
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요"/>
+        </div>
+
+        <hr class="my-4">
+        <div class="my-2">
+            <button class="w-100 btn btn-dark" type="submit">로그인</button>
+        </div>
+        <div class="my-2">
+            <button class="w-100 btn btn-outline-dark"
+                    onclick="location.href='signupForm.html'"
+                    th:onclick="|location.href='@{/signup}'|"
+                    type="button">회원가입</button>
+        </div>
+        <a th:href="@{/}">로그인하지 않고 이용하기</a>
+
+
+
+</div>
+
+</body>
+</html>

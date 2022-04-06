@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header :: header" />
+<body>
+<div class="py-5 text-center">
+    <h2>게시글 조회</h2>
+</div>
+<div class="container">
+
+    <div class="table-responsive">
+        <!--왜 session.loginMember == post.writer 이게 안먹는거지??-->
+        <div th:if="${session.loginMember != null and session.loginMember.id == post.writer.id}" style="float: right">
+            <button
+                    th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.id})}'|"
+                    class="btn btn-dark"
+                    type="button">수정</button>
+            <button
+                    th:onclick="|location.href='@{/posts/{postId}/delete(postId=${post.id})}'|"
+                    class="btn btn-dark"
+                    type="button">삭제</button>
+        </div>
+
+        <hr class="my-2">
+        <table class="table">
+            <tr class="table-active">
+                <th class="col-2" th:text="|No.  ${post.id}|"></th>
+                <th class="col-7" th:text="|Title.  ${post.title}|"></th>
+                <th class="col-3" th:text="|Views.  ${post.views}|"></th>
+            </tr>
+            <tr>
+                <td>작성자</td>
+                <td th:text="${post.writer.loginId}"></td>
+                <td th:text="${#temporals.format(post.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+        </table>
+        <div th:text="${post.content}" class="my-5"></div>
+        <hr class="my-3">
+
+
+
+
+        <!--/* 댓글 */-->
+
+
+        <button type="button"
+                class="w-100 btn btn-dark my-2"
+                onclick="getCommentList()">새 댓글 확인하기</button>
+
+        <hr class="my-3"
+
+        <!--/* 댓글 목록 시작*/-->
+        <div id="commentList"></div>
+        <!--/* 댓글 목록 끝*/-->
+
+
+        <!--/* 로그인 중일 때만 새 댓글 작성 가능 */-->
+        <form th:if="${session.loginMember != null}" th:action method="post" class="container">
+        <div class="row">
+            <div class="col-10">
+                <textarea id="newComment" name="newComment" class="w-100 form-control h-100" placeholder="새로운 댓글 작성"></textarea>
+            </div>
+            <div class="col-2">
+                <button class="w-100 btn btn-dark h-100"
+                        onclick="addComment()"
+                        type="button">댓글 쓰기</button>
+            </div>
+        </div>
+        </form>
+
+
+
+
+
+
+        <hr class="my-2"/>
+        <button class="w-100 btn btn-outline-dark"
+                th:onclick="|location.href='@{/}'|"
+                type="button">돌아가기</button>
+    </div>
+</div>
+
+<div class="container">
+
+</div>
+
+<!--
+Ajax 댓글 목록
+-->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript">
+
+    var postId = [[${postId}]]
+
+
+    $(function (){
+        getCommentList();
+    })
+
+    function getCommentList() {
+        $.ajax({
+            type: "GET",
+            url: "/posts/" + postId + "/comments",
+            // data: form, // api 호출을 위한 요청 변수가 필요하다면 사용해주세요.
+            dataType: "text"
+        })
+            .done(function (result) {
+                $("#commentList").replaceWith(result);
+            })
+            .fail(function() {
+                alert("댓글 목록을 불러오는데 실패했습니다.");
+            })
+    }
+
+    function addComment() {
+        $.ajax({
+            type: "POST",
+            url: "/posts/" + postId + "/comments",
+            data: {
+                newComment: $("#newComment").val()
+            },
+            dataType: "text"
+        })
+            .done(function () {
+                getCommentList();
+            });
+
+
+    }
+
+</script>
+
+</body>
+</html>
