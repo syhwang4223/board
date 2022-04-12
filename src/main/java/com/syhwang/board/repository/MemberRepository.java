@@ -1,6 +1,6 @@
 package com.syhwang.board.repository;
 
-import com.syhwang.board.domain.Member;
+import com.syhwang.board.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

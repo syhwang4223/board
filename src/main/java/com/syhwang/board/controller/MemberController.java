@@ -1,21 +1,21 @@
 package com.syhwang.board.controller;
 
-import com.syhwang.board.domain.Member;
-import com.syhwang.board.dto.LoginFormDto;
+import com.syhwang.board.entity.Member;
+import com.syhwang.board.dto.LoginDto;
 import com.syhwang.board.dto.SignUpFormDto;
 import com.syhwang.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 @Controller
 @Slf4j
@@ -26,14 +26,21 @@ public class MemberController {
 
     @GetMapping("/login")
     public String loginForm(Model model) {
+        model.addAttribute("member", new LoginDto());
         return "loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginFormDto loginFormDto, HttpServletRequest request) {
-        log.debug("login: loginId = {}, password = {}", loginFormDto.getLoginId(), loginFormDto.getPassword());
+    public String login(@Validated @ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult, Model model, HttpServletRequest request) {
 
-        Member loginMember = memberService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
+        log.debug("loginId={}, password={}", loginDto.getLoginId(), loginDto.getPassword());
+
+        if (bindingResult.hasErrors()) {
+            log.debug("errors= {}", bindingResult);
+            return "loginForm";
+        }
+
+        Member loginMember = memberService.login(loginDto.getLoginId(), loginDto.getPassword());
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 

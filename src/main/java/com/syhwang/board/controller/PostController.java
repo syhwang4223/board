@@ -1,19 +1,21 @@
 package com.syhwang.board.controller;
 
-import com.syhwang.board.domain.Comment;
-import com.syhwang.board.domain.Member;
-import com.syhwang.board.domain.Post;
-import com.syhwang.board.dto.PostFormDto;
+import com.syhwang.board.dto.PostDetailsDto;
+import com.syhwang.board.entity.Comment;
+import com.syhwang.board.entity.Member;
+import com.syhwang.board.entity.Post;
+import com.syhwang.board.dto.PostRequestDto;
 import com.syhwang.board.service.CommentService;
 import com.syhwang.board.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -26,45 +28,41 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping("/new")
-    public String writeForm() {
+    public String writeForm(Model model) {
+        model.addAttribute("post", new PostRequestDto());
         return "posts/writeForm";
     }
 
     @PostMapping("/new")
-    public String write(@Valid PostFormDto form
+    public String write(@Validated @ModelAttribute("post") PostRequestDto form, BindingResult bindingResult, RedirectAttributes redirectAttributes
             , @SessionAttribute(name = "loginMember") Member loginMember, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            log.debug("errors= {}", bindingResult);
+            return "posts/writeForm";
+        }
+
         Post post = postService.write(form, loginMember);
-
-
-        return "redirect:/posts/" + post.getId();
-    }
-
-    @GetMapping("/{postId}")
-    public String post(@PathVariable long postId, Model model) {
-        postService.updateView(postId);
-        Post post = postService.getPost(postId);
-
-//        List<Comment> comments = commentService.getComments(post);
-
-        model.addAttribute("post", post);
-//        model.addAttribute("comments", comments);
-
-        return "posts/postDetail";
-    }
-
-    @PostMapping("/{postId}")
-    public String comment(@PathVariable long postId, @ModelAttribute(name = "newComment") String newComment
-                          , @SessionAttribute(name = "loginMember") Member loginMember) {
-        log.debug(newComment);
-        Post post = postService.getPost(postId);
-        commentService.addComment(newComment, post, loginMember);
+        redirectAttributes.addAttribute("postId", post.getId());
+        redirectAttributes.addAttribute("status", true);
 
         return "redirect:/posts/{postId}";
     }
 
+    @GetMapping("/{postId}")
+    public String post(@PathVariable long postId, Model model) {
+        postService.updateViewCnt(postId);
+        PostDetailsDto postDetailsDto = new PostDetailsDto(postService.getDetails(postId));
+
+        model.addAttribute("post", postDetailsDto);
+
+        return "posts/postDetail";
+    }
+
+
     @GetMapping("/{postId}/comments")
     public String getComments(@PathVariable long postId, Model model) {
-        List<Comment> comments = commentService.getComments(postService.getPost(postId));
+        List<Comment> comments = commentService.getComments(postService.getDetails(postId));
         model.addAttribute("comments", comments);
 
         return "posts/commentList";
@@ -77,7 +75,7 @@ public class PostController {
 
         log.debug("addComment");
 
-        Post post = postService.getPost(postId);
+        Post post = postService.getDetails(postId);
         commentService.addComment(content, post, loginMember);
 
         return "posts/commentList";

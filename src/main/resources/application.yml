@@ -1,5 +1,8 @@
 spring:
 
+  messages:
+    basename: errors
+
   h2:
     console:
       enabled: true

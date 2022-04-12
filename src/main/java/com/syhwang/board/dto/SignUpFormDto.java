@@ -1,11 +1,12 @@
 package com.syhwang.board.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@AllArgsConstructor
 public class SignUpFormDto {
 
     @NotBlank
@@ -15,9 +16,4 @@ public class SignUpFormDto {
     @NotBlank
     private String passwordConfirm;
 
-    public SignUpFormDto(String loginId, String password, String passwordConfirm) {
-        this.loginId = loginId;
-        this.password = password;
-        this.passwordConfirm = passwordConfirm;
-    }
 }

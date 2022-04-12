@@ -1,16 +1,13 @@
 package com.syhwang.board.service;
 
-import com.syhwang.board.domain.Comment;
-import com.syhwang.board.domain.Member;
-import com.syhwang.board.domain.Post;
-import com.syhwang.board.dto.CommentDto;
+import com.syhwang.board.entity.Comment;
+import com.syhwang.board.entity.Member;
+import com.syhwang.board.entity.Post;
 import com.syhwang.board.repository.CommentRepository;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

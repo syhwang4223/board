@@ -1,10 +1,9 @@
-package com.syhwang.board.domain;
+package com.syhwang.board.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -15,9 +14,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @NotBlank
     private String loginId;
-    @NotBlank
     private String password;
 
 

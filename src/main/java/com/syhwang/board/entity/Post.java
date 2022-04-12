@@ -1,11 +1,14 @@
-package com.syhwang.board.domain;
+package com.syhwang.board.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,10 +22,8 @@ public class Post {
     @JoinColumn(name = "writer_id")
     private Member writer;
 
-    @NotEmpty
     private String title;
 
-    @NotEmpty
     @Lob
     private String content;
 
@@ -30,7 +31,24 @@ public class Post {
 
     private int likes;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
     private LocalDateTime writeDateTime;
+
+    //== 연관 관계 메서드 ==//
+    public void addComment(Comment comment, Member writer) {
+        comments.add(comment);
+        comment.setPost(this);
+        comment.setWriter(writer);
+    }
+
+
+    //== 비즈니스 로직 ==//
+    public void upViewCount() {
+        views += 1;
+    }
+
 
     @Builder
     public Post(String title, String content, Member writer) {
@@ -40,10 +58,6 @@ public class Post {
         writeDateTime = LocalDateTime.now();
         views = 0;
         likes =0;
-    }
-
-    public void upViewCount() {
-        views += 1;
     }
 
     protected Post() {}

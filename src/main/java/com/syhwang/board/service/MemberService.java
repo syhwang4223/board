@@ -1,6 +1,6 @@
 package com.syhwang.board.service;
 
-import com.syhwang.board.domain.Member;
+import com.syhwang.board.entity.Member;
 import com.syhwang.board.dto.SignUpFormDto;
 import com.syhwang.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

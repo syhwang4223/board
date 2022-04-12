@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td>작성자</td>
-                <td th:text="${post.writer.loginId}"></td>
+                <td th:text="${post.writer}"></td>
                 <td th:text="${#temporals.format(post.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
         </table>

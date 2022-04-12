@@ -1,7 +1,7 @@
 package com.syhwang.board.repository;
 
-import com.syhwang.board.domain.Comment;
-import com.syhwang.board.domain.Post;
+import com.syhwang.board.entity.Comment;
+import com.syhwang.board.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
