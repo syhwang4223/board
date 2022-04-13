@@ -92,5 +92,10 @@ public class MemberController {
         return "redirect:/login";
     }
 
+    @GetMapping("/mypage")
+    public String mypage() {
+        log.debug("mypage");
+        return "mypage";
+    }
 
 }

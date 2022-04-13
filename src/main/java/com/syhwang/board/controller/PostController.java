@@ -79,12 +79,12 @@ public class PostController {
     @PostMapping("/{postId}/comments")
     public String addComment(@PathVariable long postId
             , @SessionAttribute(name = "loginMember") Member loginMember
-            , @Validated @RequestParam("newComment") String content) {
+            , @RequestParam("newComment") String content) {
 
-
-        log.debug("addComment");
-        Post post = postService.getDetails(postId);
-        commentService.addComment(content, post, loginMember);
+        if (!content.isBlank()) {
+            Post post = postService.getDetails(postId);
+            commentService.addComment(content, post, loginMember);
+        }
 
         return "posts/commentList";
     }

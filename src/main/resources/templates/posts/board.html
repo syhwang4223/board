@@ -7,9 +7,8 @@
     <div class="py-5 text-center">
         <h2>게시글 목록</h2>
     </div>
-    
-    <div th:if="${session.loginMember == null}" class="btn btn-dark" th:onclick="|location.href='@{/login}'|" type="button">로그인</div>
-    <div th:unless="${session.loginMember == null}" class="btn btn-dark" th:onclick="|location.href='@{/logout}'|" type="button">로그아웃</div>
+
+    <div th:replace="fragment/nav :: nav"></div>
 
     <div class="table-responsive">
         <table class="table table-hover">

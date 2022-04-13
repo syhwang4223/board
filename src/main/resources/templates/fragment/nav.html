@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="nav">
+<div class="nav justify-content-end">
+    <div th:if="${session.loginMember == null}"
+         class="btn btn-dark nav-item" th:onclick="|location.href='@{/login}'|" type="button">로그인</div>
+
+    <div th:if="${session.loginMember != null}"
+         class="btn btn-dark nav-item" th:onclick="|location.href='@{/mypage}'|" type="button">마이페이지</div>
+    <div th:if="${session.loginMember != null}"
+    class="btn btn-dark nav-item" th:onclick="|location.href='@{/logout}'|" type="button">로그아웃</div>
+</div>
+</body>
+
+</html>

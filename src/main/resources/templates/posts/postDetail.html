@@ -7,6 +7,8 @@
 </div>
 <div class="container">
 
+    <div th:replace="fragment/nav :: nav"></div>
+
     <div class="table-responsive">
         <!--왜 session.loginMember == post.writer 이게 안먹는거지??-->
         <div th:if="${session.loginMember != null and session.loginMember.id == post.writer}" style="float: right">
@@ -45,7 +47,7 @@
         <button type="button"
                 class="w-100 btn btn-dark my-2"
                 onclick="getCommentList()">새 댓글 확인하기</button>
-        
+
 
         <!--/* 댓글 목록 시작*/-->
         <div id="commentList"></div>
@@ -121,6 +123,7 @@ Ajax 댓글 목록
         })
             .done(function () {
                 getCommentList();
+            //    댓글 작성 후 작성 란이 비워졌으면 좋겠음
             });
 
 
