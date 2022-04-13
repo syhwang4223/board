@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -28,6 +29,8 @@ public class Comment {
     @Lob
     private String content;
 
+    private LocalDateTime writeDateTime;
+
     private int likes;
 
     @Builder
@@ -35,6 +38,8 @@ public class Comment {
         this.writer = writer;
         this.post = post;
         this.content = content;
+        likes = 0;
+        writeDateTime = LocalDateTime.now();
     }
 
 }

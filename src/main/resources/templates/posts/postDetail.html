@@ -9,7 +9,7 @@
 
     <div class="table-responsive">
         <!--왜 session.loginMember == post.writer 이게 안먹는거지??-->
-        <div th:if="${session.loginMember != null and session.loginMember.id == post.writer.id}" style="float: right">
+        <div th:if="${session.loginMember != null and session.loginMember.id == post.writer}" style="float: right">
             <button
                     th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.id})}'|"
                     class="btn btn-dark"
@@ -45,8 +45,7 @@
         <button type="button"
                 class="w-100 btn btn-dark my-2"
                 onclick="getCommentList()">새 댓글 확인하기</button>
-
-        <hr class="my-3"
+        
 
         <!--/* 댓글 목록 시작*/-->
         <div id="commentList"></div>

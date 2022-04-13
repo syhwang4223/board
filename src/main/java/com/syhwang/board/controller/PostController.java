@@ -1,5 +1,6 @@
 package com.syhwang.board.controller;
 
+import com.syhwang.board.dto.CommentDetailsDto;
 import com.syhwang.board.dto.PostDetailsDto;
 import com.syhwang.board.entity.Comment;
 import com.syhwang.board.entity.Member;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -64,7 +66,11 @@ public class PostController {
 
     @GetMapping("/{postId}/comments")
     public String getComments(@PathVariable long postId, Model model) {
-        List<Comment> comments = commentService.getComments(postService.getDetails(postId));
+        List<CommentDetailsDto> comments = commentService.getComments(postService.getDetails(postId))
+                .stream()
+                .map(CommentDetailsDto::new)
+                .collect(Collectors.toList());
+
         model.addAttribute("comments", comments);
 
         return "posts/commentList";
@@ -73,10 +79,10 @@ public class PostController {
     @PostMapping("/{postId}/comments")
     public String addComment(@PathVariable long postId
             , @SessionAttribute(name = "loginMember") Member loginMember
-            , @RequestParam("newComment") String content) {
+            , @Validated @RequestParam("newComment") String content) {
+
 
         log.debug("addComment");
-
         Post post = postService.getDetails(postId);
         commentService.addComment(content, post, loginMember);
 

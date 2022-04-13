@@ -8,8 +8,9 @@
 <div id="commentList">
     <table class="table">
         <tr th:each="comment: ${comments}">
-            <td th:text="${comment.writer.loginId}" class="col-3"></td>
-            <td th:text="${comment.content}" class="col-9"></td>
+            <td th:text="${comment.writer}" class="col-3"></td>
+            <td th:text="${comment.content}" class="col-6"></td>
+            <td th:text="${#temporals.format(comment.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}" class="col-3"></td>
         </tr>
     </table>
 </div>
