@@ -8,6 +8,8 @@
         <h2>회원 로그인</h2>
     </div>
 
+    <h3 th:if="${param.status}" th:text="'회원가입 완료'"></h3>
+
     <form action="posts/board.html" th:action  th:object="${member}" method="post">
         <div>
             <label for="loginId">로그인 ID</label>
@@ -27,6 +29,8 @@
         </div>
 
         <hr class="my-4">
+        <div th:class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}"> 로그인 오류 </div>
+
         <div class="my-2">
             <button class="w-100 btn btn-dark" type="submit">로그인</button>
         </div>
@@ -37,8 +41,7 @@
                     type="button">회원가입</button>
         </div>
         <a th:href="@{/}">로그인하지 않고 이용하기</a>
-
-
+    </form>
 
 </div>
 

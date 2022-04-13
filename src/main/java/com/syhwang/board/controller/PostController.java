@@ -37,6 +37,8 @@ public class PostController {
     public String write(@Validated @ModelAttribute("post") PostRequestDto form, BindingResult bindingResult, RedirectAttributes redirectAttributes
             , @SessionAttribute(name = "loginMember") Member loginMember, Model model) {
 
+        log.debug("title = {}, content = {}", form.getTitle(), form.getContent());
+
         if (bindingResult.hasErrors()) {
             log.debug("errors= {}", bindingResult);
             return "posts/writeForm";

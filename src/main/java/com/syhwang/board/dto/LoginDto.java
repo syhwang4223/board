@@ -1,13 +1,10 @@
 package com.syhwang.board.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class LoginDto {
     @NotBlank
     private String loginId;
