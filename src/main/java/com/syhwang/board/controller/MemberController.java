@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,9 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@Validated @ModelAttribute("member") LoginDto loginDto, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectURL,
+                        HttpServletRequest request) {
 
         log.debug("loginId={}, password={}", loginDto.getLoginId(), loginDto.getPassword());
 
@@ -51,7 +54,7 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/logout")

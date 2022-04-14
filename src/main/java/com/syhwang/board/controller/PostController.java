@@ -53,7 +53,7 @@ public class PostController {
         return "redirect:/posts/{postId}";
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/{postId}/detail")
     public String post(@PathVariable long postId, Model model) {
         postService.updateViewCnt(postId);
         PostDetailsDto postDetailsDto = new PostDetailsDto(postService.getDetails(postId));
@@ -76,7 +76,7 @@ public class PostController {
         return "posts/commentList";
     }
     
-    @PostMapping("/{postId}/comments")
+    @PostMapping("/{postId}/comments/new")
     public String addComment(@PathVariable long postId
             , @SessionAttribute(name = "loginMember") Member loginMember
             , @RequestParam("newComment") String content) {

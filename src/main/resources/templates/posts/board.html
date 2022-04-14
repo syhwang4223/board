@@ -24,7 +24,7 @@
             <tbody>
             <tr th:each="post: ${posts}">
                 <td th:text="${post.id}"></td>
-                <td><a th:class="link-dark" th:href="@{/posts/{postId}(postId=${post.id})}" th:text="${post.title}"></a></td>
+                <td><a th:class="link-dark" th:href="@{/posts/{postId}/detail(postId=${post.id})}" th:text="${post.title}"></a></td>
                 <td th:text="${#temporals.format(post.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${post.writer}"></td>
                 <td th:text="${post.views}"></td>
