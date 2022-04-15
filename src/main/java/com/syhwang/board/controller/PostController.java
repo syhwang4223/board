@@ -1,5 +1,6 @@
 package com.syhwang.board.controller;
 
+import com.syhwang.board.Login;
 import com.syhwang.board.dto.CommentDetailsDto;
 import com.syhwang.board.dto.PostDetailsDto;
 import com.syhwang.board.entity.Comment;
@@ -36,8 +37,9 @@ public class PostController {
     }
 
     @PostMapping("/new")
-    public String write(@Validated @ModelAttribute("post") PostRequestDto form, BindingResult bindingResult, RedirectAttributes redirectAttributes
-            , @SessionAttribute(name = "loginMember") Member loginMember, Model model) {
+    public String write(@Validated @ModelAttribute("post") PostRequestDto form, BindingResult bindingResult
+            , RedirectAttributes redirectAttributes
+            , @Login Member loginMember, Model model) {
 
         log.debug("title = {}, content = {}", form.getTitle(), form.getContent());
 
@@ -50,7 +52,7 @@ public class PostController {
         redirectAttributes.addAttribute("postId", post.getId());
         redirectAttributes.addAttribute("status", true);
 
-        return "redirect:/posts/{postId}";
+        return "redirect:/posts/{postId}/detail";
     }
 
     @GetMapping("/{postId}/detail")
@@ -78,7 +80,7 @@ public class PostController {
     
     @PostMapping("/{postId}/comments/new")
     public String addComment(@PathVariable long postId
-            , @SessionAttribute(name = "loginMember") Member loginMember
+            , @Login Member loginMember
             , @RequestParam("newComment") String content) {
 
         if (!content.isBlank()) {
