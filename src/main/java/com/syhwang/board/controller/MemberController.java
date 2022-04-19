@@ -72,7 +72,7 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@Validated @ModelAttribute("member") SignUpDto form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        log.debug("loginId = {}, password = {}", form.getLoginId(), form.getPassword());
+        log.debug("loginDto = {}", form.toString());
 
         if (memberService.existLoginId(form.getLoginId())) {
             bindingResult.reject("signupFail", "이미 존재하는 아이디입니다.");

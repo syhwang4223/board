@@ -22,9 +22,9 @@ public class TestDataInit {
      */
     @PostConstruct
     public void init() {
-        Member member1 = memberService.signup(new Member("member1", "member1"));
-        Member member2 = memberService.signup(new Member("member2", "member2"));
-        Member member3 = memberService.signup(new Member("member3", "member3"));
+        Member member1 = memberService.signup(new Member("member1", "member1", "회원1", "test1@test.com"));
+        Member member2 = memberService.signup(new Member("member2", "member2", "회원2", "test2@test.com"));
+        Member member3 = memberService.signup(new Member("member3", "member3", "회원3", "test3@test.com"));
 
         Post post1 = postService.write(new PostRequestDto("오늘의 일기1", "나는 오늘 아침밥을 먹었다."), member1);
         Post post2 = postService.write(new PostRequestDto("오늘의 일기2", "나는 오늘 점심밥을 먹었다."), member1);
