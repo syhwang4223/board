@@ -1,5 +1,7 @@
 package com.syhwang.board.controller;
 
+import com.syhwang.board.Login;
+import com.syhwang.board.dto.MemberDetailDto;
 import com.syhwang.board.entity.Member;
 import com.syhwang.board.dto.LoginDto;
 import com.syhwang.board.dto.SignUpDto;
@@ -96,9 +98,11 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String mypage() {
+    public String mypage(@Login Member member, Model model) {
         log.debug("mypage");
-        return "mypage";
+        model.addAttribute("member", new MemberDetailDto(member));
+
+        return "members/mypage";
     }
 
 }

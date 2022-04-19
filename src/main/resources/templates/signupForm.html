@@ -9,10 +9,22 @@
     </div>
     <form action="posts/board.html" th:action th:object="${member}" method="post">
         <div>
+            <label for="emailAddress">이메일</label>
+            <input type="email" id="emailAddress" th:field="*{emailAddress}"
+                   class="form-control" th:errorclass="field-error" placeholder="이메일 주소를 입력하세요"/>
+            <div class="field-error" th:errors="*{emailAddress}">"이메일 주소 오류</div>
+        </div>
+        <div>
             <label for="loginId">로그인 ID</label>
             <input type="text" id="loginId" th:field="*{loginId}"
                    class="form-control" th:errorclass="field-error" placeholder="아이디를 입력하세요"/>
             <div class="field-error" th:errors="*{loginId}">아이디 오류</div>
+        </div>
+        <div>
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" th:field="*{nickname}"
+                   class="form-control" th:errorclass="field-error" placeholder="닉네임을 입력하세요"/>
+            <div class="field-error" th:errors="*{nickname}">닉네임 오류</div>
         </div>
         <div>
             <label for="password">비밀번호</label>
@@ -27,18 +39,8 @@
                    class="form-control" th:errorclass="field-error" placeholder="비밀번호를 다시 입력하세요"/>
             <div class="field-error" th:errors="*{passwordConfirm}">비밀번호 확인 오류</div>
         </div>
-          <div>
-            <label for="emailAddress">이메일</label>
-            <input type="password" id="emailAddress" th:field="*{emailAddress}"
-                   class="form-control" th:errorclass="field-error" placeholder="이메일 주소를 입력하세요"/>
-            <div class="field-error" th:errors="*{emailAddress}">"이메일 주소 오류</div>
-        </div>
-          <div>
-            <label for="nickname">닉네임</label>
-            <input type="password" id="nickname" th:field="*{nickname}"
-                   class="form-control" th:errorclass="field-error" placeholder="닉네임을 입력하세요"/>
-            <div class="field-error" th:errors="*{nickname}">닉네임 오류</div>
-        </div>
+
+
         <hr class="my-4">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}"> 회원가입 오류 메시지</p>
