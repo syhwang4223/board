@@ -31,8 +31,35 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- 페이징 시작 -->
+        <nav style="text-align: center;">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/board(page=1)}" aria-label="<<">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:each="num: ${#numbers.sequence(1, lastPage)}" class="page-item">
+                    <a class="page-link" th:href="@{/board(page=${num})}" th:text="${num}"></a>
+                </li>
+
+
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/board(page=${lastPage})}" aria-label=">>">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- 페이징 끝 -->
+
         <div th:if="${session.loginMember != null}" class="btn btn-dark" th:onclick="|location.href='@{/posts/new}'|" type="button" style="float:right">글 쓰기</div>
     </div>
+
+
 </div>
 
 

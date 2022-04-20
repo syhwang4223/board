@@ -24,8 +24,8 @@ public class Member {
     private String emailAddress;
 
     private LocalDateTime joinDateTime;
-    private int postCount; // 작성 글 수
-    private int commentCount; // 작성 댓글 수
+    private Integer postCount; // 작성 글 수
+    private Integer commentCount; // 작성 댓글 수
 
     public Member(String loginId, String password, String nickname, String emailAddress) {
         this.loginId = loginId;

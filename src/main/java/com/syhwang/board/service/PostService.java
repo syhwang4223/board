@@ -42,4 +42,12 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> getPagingPosts(int page) {
+        return postRepository.findPage(page);
+    }
+
+    public int getTotalPage() {
+        return postRepository.findAll().size()/10;
+    }
+
 }

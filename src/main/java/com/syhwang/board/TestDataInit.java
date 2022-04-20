@@ -22,7 +22,7 @@ public class TestDataInit {
      */
     @PostConstruct
     public void init() {
-        Member member1 = memberService.signup(new Member("member1", "member1", "회원1", "test1@test.com"));
+/*        Member member1 = memberService.signup(new Member("member1", "member1", "회원1", "test1@test.com"));
         Member member2 = memberService.signup(new Member("member2", "member2", "회원2", "test2@test.com"));
         Member member3 = memberService.signup(new Member("member3", "member3", "회원3", "test3@test.com"));
 
@@ -33,6 +33,13 @@ public class TestDataInit {
         commentService.addComment("뭔 하루가 먹다가 다가네;", post3, member2);
         commentService.addComment("김밥 한줄 놓고갑니다 ^_^ @))))))", post1, member2);
         commentService.addComment("김밥 한줄 놓고갑니다 ^_^ @))))))", post1, member2);
-        commentService.addComment("@>-----장미꽃 한송이 두고갑니다^^", post1, member3);
+        commentService.addComment("@>-----장미꽃 한송이 두고갑니다^^", post1, member3);*/
+
+//        Member member = memberService.signup(new Member("test", "test", "테스트", "test@test.com"));
+//        for (int i = 0; i < 20; i++) {
+//            postService.write(new PostRequestDto("게시글 제목", "게시글 내용"), member);
+//
+//        }
+
     }
 }
