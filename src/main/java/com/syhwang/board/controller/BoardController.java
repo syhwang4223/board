@@ -44,7 +44,11 @@ public class BoardController {
 
     @GetMapping("/board")
     public String index(Pageable pageable, Model model) {
-        model.addAttribute("posts", postService.getPostList(pageable));
+
+        Page<Post> page = postService.getPostList(pageable);
+        Page<PostDetailsDto> posts = page.map(PostDetailsDto::new);
+
+        model.addAttribute("posts", posts);
         return "posts/board";
     }
 

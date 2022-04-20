@@ -24,9 +24,9 @@
             <tbody>
             <tr th:each="post: ${posts}">
                 <td th:text="${post.id}"></td>
-                <td><a th:class="link-dark" th:href="@{/posts/{postId}/detail(postId=${post.id})}" th:text="${post.title}"></a></td>
+                <td><a th:href="@{/posts/{postId}/detail(postId=${post.id})}" th:text="${post.title}"></a></td>
                 <td th:text="${#temporals.format(post.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                <td th:text="${post.writer.nickname}"></td>
+                <td th:text="${post.writer}"></td>
                 <td th:text="${post.views}"></td>
             </tr>
             </tbody>
@@ -55,7 +55,7 @@
                 </li>
 
                 <li class="page-item" th:classappend="${posts.last} ? 'disabled' : _">
-                    <a class="page-link" th:classappend="${posts.last} ? 'disabled' : _" aria-label=">">
+                    <a class="page-link" th:href="${posts.last} ? '#' : @{/board(page=${posts.number+2})}" aria-label=">">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>

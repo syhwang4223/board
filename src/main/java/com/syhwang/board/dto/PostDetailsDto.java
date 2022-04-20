@@ -27,7 +27,7 @@ public class PostDetailsDto {
 
         id = post.getId();
         content = post.getContent();
-        writer = post.getWriter().getLoginId();
+        writer = post.getWriter().getNickname();
         views = post.getViews();
         writeDateTime = post.getWriteDateTime();
     }
