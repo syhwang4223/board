@@ -1,9 +1,13 @@
 package com.syhwang.board.controller;
 
 import com.syhwang.board.dto.PostDetailsDto;
+import com.syhwang.board.entity.Post;
 import com.syhwang.board.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +28,23 @@ public class BoardController {
         return "redirect:/board";
     }
 
+//    @GetMapping("/board")
+//    public String boardMain(@RequestParam(defaultValue = "1", name = "page") int page, Model model) {
+//
+//        List<PostDetailsDto> postDtos = postService.getPagingPosts(page).stream()
+//                .map(PostDetailsDto::new)
+//                .collect(Collectors.toList());
+//        int lastPage = postService.getTotalPage();
+//
+//        model.addAttribute("posts", postDtos);
+//        model.addAttribute("lastPage", lastPage);
+//
+//        return "posts/board";
+//    }
+
     @GetMapping("/board")
-    public String boardMain(@RequestParam(defaultValue = "1", name = "page") int page, Model model) {
-
-        List<PostDetailsDto> postDtos = postService.getPagingPosts(page).stream()
-                .map(PostDetailsDto::new)
-                .collect(Collectors.toList());
-        int lastPage = postService.getTotalPage();
-
-        model.addAttribute("posts", postDtos);
-        model.addAttribute("lastPage", lastPage);
-
+    public String index(Pageable pageable, Model model) {
+        model.addAttribute("posts", postService.getPostList(pageable));
         return "posts/board";
     }
 

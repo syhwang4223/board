@@ -3,8 +3,13 @@ package com.syhwang.board.service;
 import com.syhwang.board.entity.Member;
 import com.syhwang.board.entity.Post;
 import com.syhwang.board.dto.PostRequestDto;
+import com.syhwang.board.repository.PostPagingRepository;
 import com.syhwang.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +21,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostPagingRepository postPagingRepository;
 
     @Transactional
     public Post write(PostRequestDto postRequestDto, Member writer) {
@@ -47,7 +53,14 @@ public class PostService {
     }
 
     public int getTotalPage() {
-        return postRepository.findAll().size()/10;
+        return postRepository.findAll().size() / 10;
+    }
+
+    public Page<Post> getPostList(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10, Sort.by("id").descending()); // <- Sort 추가
+
+        return postPagingRepository.findAll(pageable);
     }
 
 }
