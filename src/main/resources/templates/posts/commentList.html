@@ -8,12 +8,44 @@
 <div id="commentList">
     <table class="table">
         <tr th:each="comment: ${comments}">
-            <td th:text="${comment.writer}" class="col-2"></td>
-            <td th:text="${comment.content}" class="col-7" style="word-wrap: break-word"></td>
+            <td th:text="${comment.writer}" class="col-1"></td>
+            <td th:text="${comment.content}" class="col-7"
+                style="word-wrap: break-word; white-space:pre-wrap;"></td>
             <td th:text="${#temporals.format(comment.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}" class="col-3"></td>
+            <div th:unless="${comment.writerId == session.loginMember.id}">
+                <td class="col-1">
+                    <!--추천버튼-->
+                </td>
+            </div>
+            <div th:if="${comment.writerId == session.loginMember.id}">
+                <td class="col-1">
+                    <button class="btn btn-link btn-sm" th:onclick="deleteComment([[${comment.commentId}]])">x</button>
+                </td>
+            </div>
         </tr>
     </table>
 </div>
 
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript">
+
+    var postId = [[${postId}]]
+
+    function deleteComment(commentId) {
+
+        if (confirm("댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                type: "POST",
+                url: "/posts/" + postId + "/comments/" + commentId
+            })
+                .done(function () {
+                    getCommentList();
+                });
+        }
+    }
+
+
+
+</script>
 </body>
 </html>

@@ -48,6 +48,9 @@ public class Post {
     public void upViewCount() {
         views += 1;
     }
+    public void upLikesCount() {
+        likes += 1;
+    }
 
     public void modify(String title, String content) {
         this.title = title;

@@ -10,6 +10,7 @@ import com.syhwang.board.dto.PostRequestDto;
 import com.syhwang.board.service.CommentService;
 import com.syhwang.board.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -99,6 +100,21 @@ public class PostController {
     }
 
 
+    // 좋아요
+    @PostMapping("/{postId}/like")
+    public String recommend(@Login Member loginMember, @PathVariable long postId, Model model) {
+
+        if (loginMember == null) {
+            /**
+             * 로그인이 필요하다는 팝업
+             */
+        }
+        
+        postService.updateLikes(postId);
+
+        return "redirect:/posts/{postId}/detail";
+    }
+
 
 
 
@@ -125,6 +141,15 @@ public class PostController {
             Post post = postService.getDetails(postId);
             commentService.addComment(content, post, loginMember);
         }
+
+        return "posts/commentList";
+    }
+
+    @PostMapping("/{postId}/comments/{commentId}")
+    public String deleteComment(@PathVariable long postId, @PathVariable long commentId
+            , @Login Member loginMember) {
+
+        commentService.deleteComment(commentId, loginMember);
 
         return "posts/commentList";
     }

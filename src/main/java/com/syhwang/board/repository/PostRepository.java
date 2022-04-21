@@ -29,6 +29,13 @@ public class PostRepository {
                 .setParameter("id", id)
                 .executeUpdate();
     }
+    public void updateLikes(Long id) {
+        em.createQuery("update Post p set p.likes = p.likes + 1 where p.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+
 
     public void delete(Post post) {
         em.remove(post);

@@ -18,6 +18,7 @@ public class PostDetailsDto {
     private final Long writerId;
     private final String writer;
     private final int views;
+    private final int likes;
     private final LocalDateTime writeDateTime;
 
     public PostDetailsDto(Post post) {
@@ -29,6 +30,7 @@ public class PostDetailsDto {
         commentCount = post.getComments().size();
         writer = post.getWriter().getNickname();
         views = post.getViews();
+        likes = post.getLikes();
         writeDateTime = post.getWriteDateTime();
     }
 }

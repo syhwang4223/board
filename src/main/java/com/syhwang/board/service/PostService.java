@@ -41,7 +41,9 @@ public class PostService {
 
     @Transactional
     public void updateViewCnt(Long postId) {
-        postRepository.updateView(postId);
+        Post findPost = postRepository.findOne(postId).orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다."));
+        findPost.upViewCount();
+//        postRepository.updateView(postId);
     }
 
 
@@ -59,7 +61,16 @@ public class PostService {
         } else {
             throw new IllegalStateException("본인이 작성한 글만 지울 수 있습니다.");
         }
+    }
 
+    @Transactional
+    public void updateLikes(Long postId) {
+
+        Post findPost = postRepository.findOne(postId).orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다."));
+        /**
+         *  한 번 누르면 추천, 다시한 번 누르면 추천 취소가 되어야 함
+         */
+        findPost.upLikesCount();
     }
 
     public Page<Post> getPostList(Pageable pageable) {
