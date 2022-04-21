@@ -44,7 +44,7 @@
                         class="btn btn-outline-dark"
                         type="button">수정</button>
                 <button
-                        th:onclick="|location.href='@{/posts/{postId}/delete(postId=${post.id})}'|"
+                        onclick="deletePost()"
                         class="btn btn-outline-dark"
                         type="button">삭제</button>
             </div>
@@ -130,6 +130,21 @@ Ajax 댓글 목록
             //    댓글 작성 후 작성 란이 비워졌으면 좋겠음..
             });
     }
+
+    function deletePost() {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            $.ajax({
+                type: "POST",
+                url: "/posts/" + postId + "/delete"
+            })
+                .done(function (){
+                    alert("삭제되었습니다.")
+                    location.href = "/";
+                })
+
+        }
+    }
+
 
 </script>
 

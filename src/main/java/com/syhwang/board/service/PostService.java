@@ -51,6 +51,17 @@ public class PostService {
         findPost.modify(title, content);
     }
 
+    @Transactional
+    public void delete(Long postId, Member writer) {
+        Post findPost = postRepository.findOne(postId).orElseThrow(() -> new IllegalStateException("존재하지 않는 게시글입니다."));
+        if (findPost.getWriter().getId().equals(writer.getId())) {
+            postRepository.delete(findPost);
+        } else {
+            throw new IllegalStateException("본인이 작성한 글만 지울 수 있습니다.");
+        }
+
+    }
+
     public Page<Post> getPostList(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10, Sort.by("id").descending()); // <- Sort 추가

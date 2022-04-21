@@ -24,27 +24,14 @@ public class PostRepository {
         return Optional.of(post);
     }
 
-    public List<Post> findAll() {
-        return em.createQuery("select p from Post p", Post.class)
-                .getResultList();
-    }
-
     public void updateView(Long id) {
         em.createQuery("update Post p set p.views = p.views + 1 where p.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
     }
 
-    /**
-     * 최근에 작성된 게시글 순으로 페이징 기능 추가하기
-     */
-
-    public List<Post> findPage(int page) {
-        return em.createQuery("select p from Post p" +
-                " order by p.id desc", Post.class)
-                .setFirstResult(10 * (page-1))
-                .setMaxResults(10)
-                .getResultList();
+    public void delete(Post post) {
+        em.remove(post);
     }
 
 }

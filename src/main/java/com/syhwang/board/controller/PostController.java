@@ -30,6 +30,8 @@ public class PostController {
     private final PostService postService;
     private final CommentService commentService;
 
+
+    // 게시글 생성
     @GetMapping("/new")
     public String writeForm(Model model) {
         model.addAttribute("post", new PostRequestDto());
@@ -55,6 +57,7 @@ public class PostController {
         return "redirect:/posts/{postId}/detail";
     }
 
+    // 게시글 조회
     @GetMapping("/{postId}/detail")
     public String post(@PathVariable long postId, Model model) {
         postService.updateViewCnt(postId);
@@ -66,6 +69,7 @@ public class PostController {
     }
 
 
+    // 게시글 수정
     @GetMapping("/{postId}/edit")
     public String editForm(@PathVariable long postId, Model model) {
         Post findPost = postService.getDetails(postId);
@@ -85,6 +89,16 @@ public class PostController {
         postService.modify(postId, form.getTitle(), form.getContent());
         return "redirect:/posts/{postId}/detail";
     }
+
+
+    // 게시글 삭제
+    @PostMapping("/{postId}/delete")
+    public String delete(@Login Member loginMember, @PathVariable long postId) {
+        postService.delete(postId, loginMember);
+        return "redirect:/";
+    }
+
+
 
 
 
