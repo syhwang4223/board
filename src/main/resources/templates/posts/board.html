@@ -13,7 +13,7 @@
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
-            <tr>
+            <tr class="active">
                 <th class="col-1">번호</th>
                 <th class="col-5">제목</th>
                 <th class="col-3">날짜</th>
@@ -24,7 +24,12 @@
             <tbody>
             <tr th:each="post: ${posts}">
                 <td th:text="${post.id}"></td>
-                <td><a th:href="@{/posts/{postId}/detail(postId=${post.id})}" th:text="${post.title}"></a></td>
+                <td><a th:if="${post.commentCount > 0}" th:href="@{/posts/{postId}/detail(postId=${post.id})}"
+                       th:text="|${post.title} (${post.commentCount})|"></a>
+                    <a th:if="${post.commentCount == 0}" th:href="@{/posts/{postId}/detail(postId=${post.id})}"
+                                           th:text="|${post.title}|"></a>
+
+                </td>
                 <td th:text="${#temporals.format(post.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${post.writer}"></td>
                 <td th:text="${post.views}"></td>

@@ -66,6 +66,30 @@ public class PostController {
     }
 
 
+    @GetMapping("/{postId}/edit")
+    public String editForm(@PathVariable long postId, Model model) {
+        Post findPost = postService.getDetails(postId);
+        PostDetailsDto post = new PostDetailsDto(findPost);
+        model.addAttribute("post", post);
+
+        return "posts/editForm";
+    }
+
+    @PostMapping("/{postId}/edit")
+    public String edit(@PathVariable long postId, @ModelAttribute("post") PostRequestDto form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.debug("errors= {}", bindingResult);
+            return "posts/writeForm";
+        }
+
+        postService.modify(postId, form.getTitle(), form.getContent());
+        return "redirect:/posts/{postId}/detail";
+    }
+
+
+
+    //== 댓글 ==//
+
     @GetMapping("/{postId}/comments")
     public String getComments(@PathVariable long postId, Model model) {
         List<CommentDetailsDto> comments = commentService.getComments(postService.getDetails(postId))

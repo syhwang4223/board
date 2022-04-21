@@ -49,6 +49,11 @@ public class Post {
         views += 1;
     }
 
+    public void modify(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
 
     @Builder
     public Post(String title, String content, Member writer) {

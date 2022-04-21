@@ -44,16 +44,11 @@ public class PostService {
         postRepository.updateView(postId);
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
 
-    public List<Post> getPagingPosts(int page) {
-        return postRepository.findPage(page);
-    }
-
-    public int getTotalPage() {
-        return postRepository.findAll().size() / 10;
+    @Transactional
+    public void modify(Long postId, String title, String content) {
+        Post findPost = postRepository.findOne(postId).orElseThrow(() -> new RuntimeException("존재하지 않는 게시글입니다"));
+        findPost.modify(title, content);
     }
 
     public Page<Post> getPostList(Pageable pageable) {

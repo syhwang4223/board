@@ -19,7 +19,7 @@ public class CommentDetailsDto {
 
     public CommentDetailsDto(Comment comment){
         content = comment.getContent();
-        writer = comment.getWriter().getLoginId();
+        writer = comment.getWriter().getNickname();
         writeDateTime = comment.getWriteDateTime();
     }
 

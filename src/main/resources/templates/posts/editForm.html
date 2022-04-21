@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header :: header" />
+<body>
+<div class="py-5 text-center">
+    <h2>게시글 수정</h2>
+</div>
+<div class="container" style="max-width: 700px">
+    <form th:action method="post" th:object="${post}">
+        <div>
+            <label for="title"></label>
+            <input type="text" id="title" th:field="*{title}"
+                   th:errorclass="field-error" class="form-control"/>
+            <div class="field-error" th:errors="*{title}">
+                제목 오류
+            </div>
+        </div>
+        <div>
+            <label for="content"></label>
+            <textarea id="content" th:field="*{content}"
+                      th:errorclass="field-error" class="form-control" rows="10"></textarea>
+            <div class="field-error" th:errors="*{content}">
+                내용 오류
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-dark" type="submit">수정</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-outline-dark"
+                        onclick="location.href='signupForm.html'"
+                        th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})'|"
+                        type="button">취소</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+</body>
+</html>
