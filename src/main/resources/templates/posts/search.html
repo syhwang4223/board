@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="search">
+
+<form th:action method="post" class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <input type="text" id="keyword" name="keyword" class="form-control w-100">
+        </div>
+        <div class="col-1">
+            <button class="w-100 btn btn-dark w-auto"
+                    type="button">검색</button>
+        </div>
+    </div>
+</form>
+</body>
+
+</html>

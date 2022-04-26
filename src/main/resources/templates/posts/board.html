@@ -39,6 +39,10 @@
 
         <div th:if="${session.loginMember != null}" class="btn btn-dark" th:onclick="|location.href='@{/posts/new}'|" type="button" style="float:right">글 쓰기</div>
 
+        <!-- 검색 -->
+        <div th:replace="posts/search :: search"></div>
+
+
         <!-- 페이징 시작 -->
         <nav style="text-align: center;">
             <ul class="pagination justify-content-center">
