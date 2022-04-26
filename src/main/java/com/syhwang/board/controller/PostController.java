@@ -3,14 +3,12 @@ package com.syhwang.board.controller;
 import com.syhwang.board.Login;
 import com.syhwang.board.dto.CommentDetailsDto;
 import com.syhwang.board.dto.PostDetailsDto;
-import com.syhwang.board.entity.Comment;
 import com.syhwang.board.entity.Member;
 import com.syhwang.board.entity.Post;
 import com.syhwang.board.dto.PostRequestDto;
 import com.syhwang.board.service.CommentService;
 import com.syhwang.board.service.PostService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,7 +60,7 @@ public class PostController {
     @GetMapping("/{postId}/detail")
     public String post(@PathVariable long postId, Model model) {
         postService.updateViewCnt(postId);
-        PostDetailsDto postDetailsDto = new PostDetailsDto(postService.getDetails(postId));
+        PostDetailsDto postDetailsDto = new PostDetailsDto(postService.getPost(postId));
 
         model.addAttribute("post", postDetailsDto);
 
@@ -73,7 +71,7 @@ public class PostController {
     // 게시글 수정
     @GetMapping("/{postId}/edit")
     public String editForm(@PathVariable long postId, Model model) {
-        Post findPost = postService.getDetails(postId);
+        Post findPost = postService.getPost(postId);
         PostDetailsDto post = new PostDetailsDto(findPost);
         model.addAttribute("post", post);
 
@@ -122,7 +120,7 @@ public class PostController {
 
     @GetMapping("/{postId}/comments")
     public String getComments(@PathVariable long postId, Model model) {
-        List<CommentDetailsDto> comments = commentService.getComments(postService.getDetails(postId))
+        List<CommentDetailsDto> comments = commentService.getComments(postService.getPost(postId))
                 .stream()
                 .map(CommentDetailsDto::new)
                 .collect(Collectors.toList());
@@ -138,7 +136,7 @@ public class PostController {
             , @RequestParam("newComment") String content) {
 
         if (!content.isBlank()) {
-            Post post = postService.getDetails(postId);
+            Post post = postService.getPost(postId);
             commentService.addComment(content, post, loginMember);
         }
 

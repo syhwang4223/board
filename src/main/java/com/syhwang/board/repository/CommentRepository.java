@@ -20,7 +20,7 @@ public class CommentRepository {
     }
 
     public Optional<Comment> findOne(Long commentId) {
-        return Optional.of(em.find(Comment.class, commentId));
+        return Optional.ofNullable(em.find(Comment.class, commentId));
     }
 
     public List<Comment> findByPost(Post post) {

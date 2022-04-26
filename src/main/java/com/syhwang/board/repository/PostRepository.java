@@ -21,7 +21,7 @@ public class PostRepository {
 
     public Optional<Post> findOne(Long id) {
         Post post = em.find(Post.class, id);
-        return Optional.of(post);
+        return Optional.ofNullable(post);
     }
 
     public void updateView(Long id) {
@@ -34,8 +34,6 @@ public class PostRepository {
                 .setParameter("id", id)
                 .executeUpdate();
     }
-
-
 
     public void delete(Post post) {
         em.remove(post);

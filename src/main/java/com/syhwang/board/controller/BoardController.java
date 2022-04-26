@@ -11,10 +11,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @Slf4j
@@ -52,4 +54,18 @@ public class BoardController {
         return "posts/board";
     }
 
+    
+    // 제목으로 검색
+    @GetMapping("/board/search")
+    public String search(@ModelAttribute("keyword") String keyword, Pageable pageable, Model model) {
+
+        log.debug("search keyword = {}", keyword);
+
+        Page<Post> searchList = postService.search(keyword, pageable);
+        Page<PostDetailsDto> posts = searchList.map(PostDetailsDto::new);
+
+        model.addAttribute("posts", posts);
+        return "posts/searchPage";
+
+    }
 }
