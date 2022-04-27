@@ -3,12 +3,12 @@
 <head th:replace="fragment/header :: header" />
 
 <body>
+<div th:replace="fragment/nav :: nav"></div>
 <div class="container">
     <div class="py-5 text-center">
         <h2 th:text="|게시글 검색: ${keyword}|">게시글 검색</h2>
     </div>
 
-    <div th:replace="fragment/nav :: nav"></div>
 
     <div class="table-responsive">
         <table class="table table-hover">
