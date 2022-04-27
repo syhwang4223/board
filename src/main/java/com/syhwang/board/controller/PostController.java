@@ -98,19 +98,16 @@ public class PostController {
     }
 
 
-    // 좋아요
+    // 게시글 추천
+    @ResponseBody
     @PostMapping("/{postId}/like")
     public String recommend(@Login Member loginMember, @PathVariable long postId, Model model) {
 
         if (loginMember == null) {
-            /**
-             * 로그인이 필요하다는 팝업
-             */
+            return "추천 기능은 로그인한 회원만 사용할 수 있습니다";
         }
         
-        postService.updateLikes(postId);
-
-        return "redirect:/posts/{postId}/detail";
+        return postService.updateLikes(postId, loginMember);
     }
 
 

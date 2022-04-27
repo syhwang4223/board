@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragment/header :: header" />
 <body>
+
+<div th:replace="fragment/nav :: nav"></div>
 <div class="py-5 text-center">
     <h2>게시글 조회</h2>
 </div>
 <div class="container">
 
-    <div th:replace="fragment/nav :: nav"></div>
 
 
 
@@ -35,7 +36,7 @@
         <!--/* 게시글 추천 */-->
         <div class="text-center">
             <button class="btn btn-outline-primary"
-                    onclick="recommend()"
+                    onclick="updateRecommend()"
                     th:text="|추천 (${post.likes})|"
                     type="button">추천</button>
         </div>
@@ -155,17 +156,20 @@ Ajax 댓글 목록
         }
     }
 
-    // 추천 수도 비동기로 가져와야 하나?
-
-    function recommend() {
+    function updateRecommend() {
         $.ajax({
             type: "POST",
             url: "/posts/" + postId + "/like"
         })
-            .done(function (){
-                alert("추천했습니다.");
+            .done(function (message){
+                alert(message);
+                location.reload();
             })
     }
+
+
+
+
 
 
 </script>

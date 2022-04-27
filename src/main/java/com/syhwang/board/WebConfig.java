@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // 비회원도 게시글, 댓글 읽기는 가능
                 .excludePathPatterns("/", "/board", "/board/search",
                         "/signup", "/login", "/logout",
-                        "/posts/*/detail", "/posts/*/comments",
+                        "/posts/*/detail", "/posts/*/comments", "/posts/*/like",
                         "/css/**", "/*.ico", "/error");
 
     }

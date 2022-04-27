@@ -1,8 +1,9 @@
 package com.syhwang.board.service;
 
+import com.syhwang.board.entity.Like;
 import com.syhwang.board.entity.Member;
 import com.syhwang.board.entity.Post;
-import com.syhwang.board.dto.PostRequestDto;
+import com.syhwang.board.repository.LikeRepository;
 import com.syhwang.board.repository.PostJpaRepository;
 import com.syhwang.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostJpaRepository postJpaRepository;
+    private final LikeRepository likeRepository;
 
     // 게시글 작성
     @Transactional
@@ -67,12 +71,19 @@ public class PostService {
 
     // 게시글 추천
     @Transactional
-    public void updateLikes(Long postId) {
+    public String updateLikes(Long postId, Member member) {
         Post findPost = getPost(postId);
-        /**
-         *  한 번 누르면 추천, 다시한 번 누르면 추천 취소가 되어야 함
-         */
-        findPost.upLikesCount();
+        Optional<Like> like = likeRepository.findByPostAndMember(findPost, member);
+
+        if (like.isEmpty()) {
+            findPost.upLikesCount();
+            likeRepository.save(new Like(member, findPost));
+            return "추천했습니다";
+        } else {
+            findPost.downLikesCount();
+            likeRepository.delete(like.get());
+            return "추천을 취소했습니다.";
+        }
     }
 
     // 페이징

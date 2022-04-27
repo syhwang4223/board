@@ -51,6 +51,9 @@ public class Post {
     public void upLikesCount() {
         likes += 1;
     }
+    public void downLikesCount() {
+        likes -= 1;
+    }
 
     public void modify(String title, String content) {
         this.title = title;
