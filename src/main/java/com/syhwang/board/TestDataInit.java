@@ -2,7 +2,6 @@ package com.syhwang.board;
 
 import com.syhwang.board.entity.Member;
 import com.syhwang.board.entity.Post;
-import com.syhwang.board.dto.PostRequestDto;
 import com.syhwang.board.service.CommentService;
 import com.syhwang.board.service.MemberService;
 import com.syhwang.board.service.PostService;
@@ -23,25 +22,14 @@ public class TestDataInit {
     @PostConstruct
     public void init() {
 
+        for (int i = 0; i < 100; i++) {
+            Member member = new Member("test" + i, "password", "테스트" + i, "test" + i + "@test.com");
+            memberService.signup(member);
 
-        Member member1 = memberService.signup(new Member("member1", "member1", "회원1", "test1@test.com"));
-//        Member member2 = memberService.signup(new Member("member2", "member2", "회원2", "test2@test.com"));
-//        Member member3 = memberService.signup(new Member("member3", "member3", "회원3", "test3@test.com"));
-//
-//        Post post1 = postService.write(new PostRequestDto("오늘의 일기1", "나는 오늘 아침밥을 먹었다."), member1);
-//        Post post2 = postService.write(new PostRequestDto("오늘의 일기2", "나는 오늘 점심밥을 먹었다."), member1);
-//        Post post3 = postService.write(new PostRequestDto("오늘의 일기3", "나는 오늘 저녁밥을 먹었다."), member1);
-//
-//        commentService.addComment("뭔 하루가 먹다가 다가네;", post3, member2);
-//        commentService.addComment("김밥 한줄 놓고갑니다 ^_^ @))))))", post1, member2);
-//        commentService.addComment("김밥 한줄 놓고갑니다 ^_^ @))))))", post1, member2);
-//        commentService.addComment("@>-----장미꽃 한송이 두고갑니다^^", post1, member3);
+            Post post = postService.write("게시글 제목" + i, "게시글 내용" + i, member);
+            commentService.addComment("댓글 테스트", post, member);
+        }
 
-//        Member member = memberService.signup(new Member("test", "test", "테스트", "test@test.com"));
-//        for (int i = 0; i < 20; i++) {
-//            postService.write(new PostRequestDto("게시글 제목", "게시글 내용"), member);
-//
-//        }
 
     }
 }

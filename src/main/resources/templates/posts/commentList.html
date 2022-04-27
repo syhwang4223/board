@@ -12,12 +12,12 @@
             <td th:text="${comment.content}" class="col-7"
                 style="word-wrap: break-word; white-space:pre-wrap;"></td>
             <td th:text="${#temporals.format(comment.writeDateTime, 'yyyy-MM-dd HH:mm:ss')}" class="col-3"></td>
-            <div th:unless="${comment.writerId == session.loginMember.id}">
+            <div th:if="${session.loginMember == null}">
                 <td class="col-1">
                     <!--추천버튼-->
                 </td>
             </div>
-            <div th:if="${comment.writerId == session.loginMember.id}">
+            <div th:unless="${session.loginMember == null}">
                 <td class="col-1">
                     <button class="btn btn-link btn-sm" th:onclick="deleteComment([[${comment.commentId}]])">x</button>
                 </td>

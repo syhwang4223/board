@@ -49,7 +49,7 @@ public class PostController {
             return "posts/writeForm";
         }
 
-        Post post = postService.write(form, loginMember);
+        Post post = postService.write(form.getTitle(), form.getContent(), loginMember);
         redirectAttributes.addAttribute("postId", post.getId());
         redirectAttributes.addAttribute("status", true);
 

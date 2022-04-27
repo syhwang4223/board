@@ -23,10 +23,10 @@ public class PostService {
 
     // 게시글 작성
     @Transactional
-    public Post write(PostRequestDto postRequestDto, Member writer) {
+    public Post write(String title, String content, Member writer) {
         Post post = Post.builder()
-                .title(postRequestDto.getTitle())
-                .content(postRequestDto.getContent())
+                .title(title)
+                .content(content)
                 .writer(writer)
                 .build();
         return postRepository.save(post);
