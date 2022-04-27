@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragment/header :: header" />
 <body>
+<div th:replace="fragment/nav :: nav"></div>
+
+<div class="py-5 text-center">
+    <h2>마이 페이지</h2>
+</div>
 <div class="container" style="max-width: 560px">
-    <div class="py-5 text-center">
-        <h2>마이 페이지</h2>
-    </div>
 
     <form action="posts/board.html" th:action th:object="${member}" method="post">
         <div>
