@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body th:fragment="search">
 
-<form th:action method="get" class="container my-3">
+<form th:action="@{/board/search}" method="get" class="container my-3">
     <div class="row justify-content-center">
         <div class="col-4">
             <input type="text" id="keyword" name="keyword" class="form-control w-100">

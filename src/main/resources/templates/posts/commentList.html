@@ -18,8 +18,10 @@
                 </td>
             </div>
             <div th:unless="${session.loginMember == null}">
-                <td class="col-1">
-                    <button class="btn btn-link btn-sm" th:onclick="deleteComment([[${comment.commentId}]])">x</button>
+                <td th:if="${session.loginMember.id == comment.writerId}" class="col-1">
+                    <button class= "btn btn-link btn-sm" th:onclick="deleteComment([[${comment.commentId}]])">x</button>
+                </td>
+                <td th:unless="${session.loginMember.id == comment.writerId}" class="col-1">
                 </td>
             </div>
         </tr>

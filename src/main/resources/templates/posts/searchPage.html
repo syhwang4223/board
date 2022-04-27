@@ -5,7 +5,7 @@
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>게시글 검색</h2>
+        <h2 th:text="|게시글 검색: ${keyword}|">게시글 검색</h2>
     </div>
 
     <div th:replace="fragment/nav :: nav"></div>
@@ -47,30 +47,30 @@
         <nav style="text-align: center;">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${posts.first} ? 'disabled' : _">
-                    <a class="page-link" th:href="@{/board(page=1)}" aria-label="<<">
+                    <a class="page-link" th:href="@{/board/search(keyword=${keyword}, page=1)}" aria-label="<<">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
 
                 <li class="page-item" th:classappend="${posts.first} ? 'disabled' : _">
-                    <a class="page-link" th:href="${posts.first} ? '#' : @{/board(page=${posts.number})}" aria-label="<">
+                    <a class="page-link" th:href="${posts.first} ? '#' : @{/board/search(keyword=${keyword}, page=${posts.number})}" aria-label="<">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
 
                 <li th:each="num: ${#numbers.sequence(1, posts.totalPages)}" class="page-item"
                     th:classappend="${posts.number+1 == num} ? 'active' : _">
-                    <a class="page-link" th:href="@{/board(page=${num})}" th:text="${num}"></a>
+                    <a class="page-link" th:href="@{/board/search(keyword=${keyword}, page=${num})}" th:text="${num}"></a>
                 </li>
 
                 <li class="page-item" th:classappend="${posts.last} ? 'disabled' : _">
-                    <a class="page-link" th:href="${posts.last} ? '#' : @{/board(page=${posts.number+2})}" aria-label=">">
+                    <a class="page-link" th:href="${posts.last} ? '#' : @{/board/search(keyword=${keyword}, page=${posts.number+2})}" aria-label=">">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
 
                 <li class="page-item" th:classappend="${posts.last} ? 'disabled' : _">
-                    <a class="page-link" th:href="@{/board(page=${posts.totalPages})}" aria-label=">>">
+                    <a class="page-link" th:href="@{/board/search(keyword=${keyword}, page=${posts.totalPages})}" aria-label=">>">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
