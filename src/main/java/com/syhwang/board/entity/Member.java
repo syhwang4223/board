@@ -36,4 +36,9 @@ public class Member {
         postCount = 0;
         commentCount = 0;
     }
+
+    public void update(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
+    }
 }

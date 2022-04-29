@@ -2,6 +2,7 @@ package com.syhwang.board.controller;
 
 import com.syhwang.board.Login;
 import com.syhwang.board.dto.MemberDetailDto;
+import com.syhwang.board.dto.MemberUpdateDto;
 import com.syhwang.board.entity.Member;
 import com.syhwang.board.dto.LoginDto;
 import com.syhwang.board.dto.SignUpDto;
@@ -51,7 +52,7 @@ public class MemberController {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호를 다시 확인해주세요.");
             return "loginForm";
         }
-        
+
         // 로그인 성공
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
@@ -78,8 +79,7 @@ public class MemberController {
 
         if (memberService.existLoginId(form.getLoginId())) {
             bindingResult.reject("signupFail", "이미 존재하는 아이디입니다.");
-        }
-        else if (!memberService.isValidPassword(form.getPassword(), form.getPasswordConfirm())) {
+        } else if (!memberService.isValidPassword(form.getPassword(), form.getPasswordConfirm())) {
             bindingResult.reject("signupFail", "비밀번호를 다시 확인해주세요.");
         }
 
@@ -105,4 +105,26 @@ public class MemberController {
         return "members/mypage";
     }
 
+    @GetMapping("/edit")
+    public String editFrom(@Login Member member, Model model) {
+        model.addAttribute("member", new MemberUpdateDto());
+        return "members/editForm";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Validated @ModelAttribute("member") MemberUpdateDto form, BindingResult bindingResult, @Login Member member) {
+
+        if (memberService.login(member.getLoginId(), form.getCurrentPassword()) == null) {
+            bindingResult.reject("signupFail", "비밀번호를 다시 확인해주세요.");
+        }
+        if (bindingResult.hasErrors()) {
+            log.debug("error = {}", bindingResult);
+            return "members/editForm";
+        }
+
+
+        memberService.update(member, form.getNickname(), form.getNewPassword());
+
+        return "redirect:/mypage";
+    }
 }

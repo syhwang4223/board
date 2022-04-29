@@ -39,5 +39,9 @@ public class MemberService {
 
     }
 
+    public void update(Member member, String nickname, String password) {
+        member.update(nickname, password);
+    }
+
 
 }

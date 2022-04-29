@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header :: header" />
+<body>
+<div th:replace="fragment/nav :: nav"></div>
+
+<div class="py-5 text-center">
+    <h2>마이 페이지</h2>
+</div>
+<div class="container" style="max-width: 560px">
+
+    <form action="posts/board.html" th:action th:object="${member}" method="post">
+        <div>
+            <label for="nickname">새 닉네임</label>
+            <input type="text" id="nickname" th:field="*{nickname}"
+                   class="form-control"/>
+            <div class="field-error" th:errors="*{nickname}">닉네임 공란 오류</div>
+
+        </div>
+        <div>
+            <label for="nickname">현재 비밀번호</label>
+            <input type="password" id="currentPassword" th:field="*{currentPassword}"
+                   class="form-control"/>
+            <div class="field-error" th:errors="*{currentPassword}">비밀번호 공란 오류</div>
+
+        </div>
+        <div>
+            <label for="nickname">새 비밀번호</label>
+            <input type="password" id="newPassword" th:field="*{newPassword}"
+                   class="form-control"/>
+            <div class="field-error" th:errors="*{newPassword}">비밀번호 공란 오류</div>
+        </div>
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}"> 회원정보 수정 오류 메시지</p>
+        </div>
+
+        <hr class="my-4">
+        <div class="my-2">
+            <button class="w-100 btn btn-dark" type="post">수정</button>
+        </div>
+        <div class="my-2">
+            <button class="w-100 btn btn-outline-dark"
+                    onclick="location.href='mypage.html'"
+                    th:onclick="|location.href='@{/mypage}'|"
+                    type="button">취소</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+</body>
+</html>
